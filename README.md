@@ -116,11 +116,11 @@ I'm quite sure there are a few stochastic intensity models
 
 ## Cite Me
 
-`
+```
 @inproceedings{Chen2018MultivariateForecasting,
     title = {{Multivariate Arrival Times with Recurrent Neural Networks for Personalized Demand Forecasting}},
     year = {2018},
     booktitle = {Proceedings of International Conference of Data Mining DMS Workshop},
     author = {Chen, Tianle and Keng, Brian and Moreno, Javier}
 }
-`
+```
