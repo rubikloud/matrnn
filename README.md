@@ -89,6 +89,10 @@ The last axis contains all the arrival-time information for the process
 - `unc(t)` is `1` if next event is observed by end of training and `0` otherwise
 - `purchstatus(t)` is `1` if first event has occurred and `0` otherwise
 
+You'll need to tweak the fitting and training methods for production.
+The generation of the `(tse, tte, unc, purchstatus)` time-series
+	converts a sparse table of arrivals into a dense matrix,
+	making this an i/o bottleneck.
 
 
 # What Can You Do/Not-Do With MAT-RNN?
