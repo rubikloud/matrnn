@@ -99,14 +99,19 @@ The generation of the `(tse, tte, unc, purchstatus)` time-series
 
 A distribution for the prediction for next arrival time is useful
 	when you have sparse and highly dependent multivariate arrival times.
+
+
+## Do: Any function of next arrival time.
+
 You can set your estimates to minimize some exogenous loss function
 	that is based on a random time-to-arrival
 	by minimizing the expected loss,
 	or output probabilities of arrival in some time period
 	as well as a point estimate (take the mode of prediction).
 
-A difficult thing to do in this setup is 
-	predicting the number of arrivals in each time period.
+
+## Not-Do: Any function of multiple next arrival times.
+
 A naive approach would be to bootstrap your estimates
 	by consecutively running predicted times to next arrivals
 	until the end of the time period
@@ -119,7 +124,6 @@ I'm quite sure there are a few stochastic intensity models
 
 
 ## Cite Me
-
 ```
 @inproceedings{Chen2018MultivariateForecasting,
     title = {{Multivariate Arrival Times with Recurrent Neural Networks for Personalized Demand Forecasting}},
