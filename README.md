@@ -75,10 +75,11 @@ In
 	[`examples/CMAPSS/`](https://github.com/tianle91/matrnn/tree/master/examples/CMAPSS/)
 	you'll find code to run the model as described
 	with `tensorflow` and `keras`.
+Only `matrnn_objective.py` is strictly required to fit the model.
 
 - `matrnn_distributional.py` has functions for the Weibull distribution to use outside of training.
-- `matrnn_objective.py` describes the log-likelihoods used in model training.
 - `matrnn_fitter.py` defines the methods for training and inference.
+- `matrnn_objective.py` describes the log-likelihoods used in model training. 
 
 For the input matrix, the loss function expects a `y` matrix of shape
 	`(n_observations, n_sequence, n_eventtypes, 4)`.
