@@ -11,13 +11,13 @@ In survival analysis, for example,
 	but we want to estimate their age-of-death
 	in the interest of prolonging it.
 
-In a similar approach as `WTTE-RNN`
+Similar to `WTTE-RNN`
 	([linked here](https://github.com/ragulpr/wtte-rnn/)),
 	we adopt a parametric approach.
-Here, we do not attempt to model the hazard rate as in survival analysis,
+However, we do not attempt to model the hazard rate,
 	hence we do not require strict assumptions 
-	regarding the memoryless-ness of the arrival times
-	(which is a problem encountered in `WTTE-RNN`).
+	such as memoryless-ness,
+	which is a problem encountered in `WTTE-RNN`.
 We assume that there are only as many arrival times as there are events
 	and we observe conditional versions of them
 	for each time `t`.
@@ -71,7 +71,9 @@ Otherwise, we have a censored observation.
 
 ## Implementation
 
-In `CMAPSS/rnn_results` you'll find code to run the model as described
+In 
+	[`examples/CMAPSS/`](https://github.com/tianle91/matrnn/tree/master/examples/CMAPSS/)
+	you'll find code to run the model as described
 	with `tensorflow` and `keras`.
 
 - `matrnn_distributional.py` has functions for the Weibull distribution to use outside of training.
