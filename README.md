@@ -88,7 +88,7 @@ In
 	you'll find code to run the model as described
 	with `tensorflow` and `keras`.
 Only `matrnn_objective.py` is strictly required to fit the model.
-A demo for illustration is privided in
+A demo for illustration is provided in
     [`examples/demo.ipynb`](https://github.com/tianle91/matrnn/tree/master/examples/demo.ipynb/)
     where we predict event arrivals for 4 event types with fixed inter-arrival times.
 
