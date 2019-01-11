@@ -53,7 +53,8 @@ Suppose that `f(.|k), S(.|k)`
 	and survival functions `S(t) = P(Y > t)`
 	for `Y` which are parametrized by `k`.
 Then this induces a distribution on `Z_t = Y - tse(t) | Y > tse(t)`
-	which we assume are `f*(.|k), S*(.|k)`.
+	which we assume are `f_t(.|k), S_t(.|k)`
+	(i.e. `S_t(s) = P(Z_t > s) = P(Y > s + tse(t) | Y > tse(t))`).
 
 
 If the next time-to-event is observed before the end of training period,
@@ -69,6 +70,17 @@ Otherwise, we have a censored observation.
 `loss_t = S*(time-to-end(t)|k_t)`
 
 
+
+## Predictions
+
+Once we have a set of optimal parameters for the RNN,
+	we can then obtain the optimal predicted parameters `k_t`.
+Only the last set of parameters is required for predicting next arrival times
+	(i.e. assume this is `k_T`).
+The predicted density of `Y` given `tse(T)` is `f_T(.|k_T)`.
+
+
+
 ## Implementation
 
 In 
@@ -76,6 +88,9 @@ In
 	you'll find code to run the model as described
 	with `tensorflow` and `keras`.
 Only `matrnn_objective.py` is strictly required to fit the model.
+A demo for illustration is provided in
+    [`examples/demo.ipynb`](https://github.com/tianle91/matrnn/tree/master/examples/demo.ipynb/)
+    where we predict event arrivals for 4 event types with fixed inter-arrival times.
 
 - `matrnn_distributional.py` has functions for the Weibull distribution to use outside of training.
 - `matrnn_fitter.py` defines the methods for training and inference.
