@@ -1,9 +1,7 @@
 import numpy as np
 
 def tse(indicators):
-    '''
-    return time since event, given vector of indicators
-    '''
+    '''return time since event, given vector of indicators'''
     ndat = len(indicators)
     tse = np.zeros(ndat)
     accum_tse = 0
@@ -17,9 +15,7 @@ def tse(indicators):
 
 
 def tte(indicators):
-    '''
-    return time to event, given vector of indicators
-    '''
+    '''return time to event, given vector of indicators'''
     ndat = len(indicators)
     tte = np.zeros(ndat)
     accum_tte = 0

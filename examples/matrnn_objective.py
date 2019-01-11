@@ -3,7 +3,7 @@ import keras.backend as K
 
 
 def single_activation(sc, sh, iniscale, maxshape = 10.):
-    
+    '''return tuple of activated values of (scale, shape) for single observation'''
     eps = K.epsilon()
     sc = iniscale*K.exp(sc)
     
@@ -16,7 +16,7 @@ def single_activation(sc, sh, iniscale, maxshape = 10.):
 
 
 def activation(ypred, iniscale, maxshape = 10.):
-    '''
+    '''return tensor of activated outputs with last index being (scale, shape)
     prep nn output layer by converting it into natural scale
     scale:
         initialize scale assuming shape is 1, at mle
@@ -32,7 +32,7 @@ def activation(ypred, iniscale, maxshape = 10.):
 
 
 def single_loglike(tse, tte, sc, sh, iswtte=False):
-    
+    '''return discrete and right-censored loglikelihoods for single observation'''
     eps  = K.epsilon()
     haz0 = K.pow((tse+tte+eps)/sc, sh)
     haz1 = K.pow((tse+tte+1. )/sc, sh)
@@ -46,9 +46,9 @@ def single_loglike(tse, tte, sc, sh, iswtte=False):
         hazc = 0
 
     # for interval censored...
-    # exp(-haz0)-exp(-haz1) = exp(-haz1)       (  exp(-haz0-(-haz1)) - 1  )
-    # log(...)              = -haz1     +   log(  exp(-haz0-(-haz1)) - 1  )
-    loglike_ivc             = -haz1     + K.log(K.exp(-haz0-(-haz1)) - 1.0)
+    # exp(-haz0)-exp(-haz1) = exp(-haz1)       (  exp(-haz0-(-haz1)) - 1 )
+    # log(...)              = -haz1     +   log(  exp(-haz0-(-haz1)) - 1 )
+    loglike_ivc             = -haz1     + K.log(K.exp(-haz0-(-haz1)) - 1.)
     # log(...)-log(S(tse))
     loglike_ivc = loglike_ivc - (-hazc) 
 
@@ -70,7 +70,7 @@ class ExcessConditionalLoss(object):
         self.iswtte = iswtte
         
     def loss(self, ytrue, ypred):
-        
+        '''return loss as -1.*loglikelihood'''
         # this is ytrue...
         # y[..., {0, 1, 2, 3}] is {tse, tte, uncensored, purchstatus}        
         tse = ytrue[..., 0]
