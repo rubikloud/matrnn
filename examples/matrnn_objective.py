@@ -3,7 +3,18 @@ import keras.backend as K
 
 
 def single_activation(sc, sh, iniscale, maxshape = 10.):
-    '''return tuple of activated values of (scale, shape) for single observation'''
+    '''return tuple of activated values of (scale, shape) for single observation
+
+    arguments:
+        sc: tensor of scale output
+        sh: tensor of shape output
+        iniscale: float of initial value for scale
+        maxshape: maximum shape parameter
+
+    return:
+        tuple of tensors for activated scale and shape
+    '''
+
     eps = K.epsilon()
     sc = iniscale*K.exp(sc)
     
@@ -17,14 +28,16 @@ def single_activation(sc, sh, iniscale, maxshape = 10.):
 
 def activation(ypred, iniscale, maxshape = 10.):
     '''return tensor of activated outputs with last index being (scale, shape)
-    prep nn output layer by converting it into natural scale
-    scale:
-        initialize scale assuming shape is 1, at mle
-    shape:
-        cap at maxshape
-    note that output is of same shape as input x and this allows for hierarchical predictions
-        e.g. x.shape = (nevents, 2)
+
+    arguments:
+        ypred: tensor of outputs
+    	iniscale: initial value for scale (mle for case where shape is 1)
+    	maxshape: maximum shape parameter
+
+    return:
+        tensor of stacked activated scale and shape
     '''
+
     sc = ypred[..., 0]
     sh = ypred[..., 1]
     sc, sh = single_activation(sc, sh, iniscale, maxshape)
@@ -32,7 +45,19 @@ def activation(ypred, iniscale, maxshape = 10.):
 
 
 def single_loglike(tse, tte, sc, sh, iswtte=False):
-    '''return discrete and right-censored loglikelihoods for single observation'''
+    '''return discrete and right-censored loglikelihoods for single observation
+
+    arguments:
+        tse: tensor of time since last event
+        tte: tensor of time to next event (or end of training)
+        sc: tensor of scale parameters
+        sh: tensor of shape parameters
+        iswtte: bool of whether model is WTTE
+
+    return:
+        tuple of tensors for uncensored and censored cases of log-likelihood
+    '''
+
     eps  = K.epsilon()
     haz0 = K.pow((tse+tte+eps)/sc, sh)
     haz1 = K.pow((tse+tte+1. )/sc, sh)
@@ -60,17 +85,21 @@ def single_loglike(tse, tte, sc, sh, iswtte=False):
 
 
 class ExcessConditionalLoss(object):
-    '''
-    method 'loss' takes (ytrue, ypred)
-    ytrue and ypred has same shape except last dimension
-        ytrue has 3 while ypred has 2
-    '''
     
     def __init__(self, iswtte=False):
         self.iswtte = iswtte
         
     def loss(self, ytrue, ypred):
-        '''return loss as -1.*loglikelihood'''
+        '''return loss as negative of log-likelihood
+
+        arguments:
+            ytrue: tensor of (tse, tte, unc, purchstatus)
+            ypred: tensor of activated neural network outputs
+
+        return:
+            tensor of loss
+        '''
+
         # this is ytrue...
         # y[..., {0, 1, 2, 3}] is {tse, tte, uncensored, purchstatus}        
         tse = ytrue[..., 0]

@@ -3,13 +3,9 @@ import keras.backend as K
 
 
 class SQLoss(object):
-    '''
-    method 'loss' takes (ytrue, ypred)
-    ytrue and ypred has same shape except last dimension
-        ytrue has 3 while ypred has 2
-    '''
         
     def loss(self, ytrue, ypred):
+        '''return loss'''
         
         # this is ytrue...
         # y[..., {0, 1, 2, 3}] is {tse, tte, uncensored, purchstatus}        
