@@ -64,7 +64,7 @@ class TSSparse(object):
             out[evdex, :firstev[evdex]] = 0
         return out
 
-    def tstfs(self):
+    def transformations(self):
         out = {
             'time_since_event': self.tse,
             'time_to_event': self.tte,
@@ -93,6 +93,7 @@ if __name__ == '__main__':
     print (x)    
     
     tssobj = TSSparse(x)
+    tssobjtstfs = tssobj.transformations()
     print ('firstev:\n', tssobj.make_firstev())
     print ('lastev:\n', tssobj.make_lastev())
     
@@ -102,17 +103,17 @@ if __name__ == '__main__':
     plt.show()
 
     print ('tse imshow')
-    plt.imshow(tssobj.tstfs()['time_since_event'])
+    plt.imshow(tssobjtstfs['time_since_event'])
     plt.show()
     
     print ('tte imshow')
-    plt.imshow(tssobj.tstfs()['time_to_event'])
+    plt.imshow(tssobjtstfs['time_to_event'])
     plt.show()
     
     print ('unc imshow')
-    plt.imshow(tssobj.tstfs()['is_uncensored'])
+    plt.imshow(tssobjtstfs['is_uncensored'])
     plt.show()
     
     print ('pch imshow')
-    plt.imshow(tssobj.tstfs()['is_notfirstrodeo'])
+    plt.imshow(tssobjtstfs['is_notfirstrodeo'])
     plt.show()
